@@ -150,8 +150,6 @@ public class MovieSearchTest {
 		Movie movie = new OMDbAPI().getMovie(title);
 
 		assertThat(movieOnImdbWeb.maturityRating()).isEqualTo(movie.maturityRating());
-		System.out.println(movieOnImdbWeb.maturityRating() + "pehle vale mei");
-		System.out.println(movie.maturityRating() + "doosre vale mei");
 
 		// throw new Exception("Test Pending");
 	}

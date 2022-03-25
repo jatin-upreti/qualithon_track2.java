@@ -1,15 +1,12 @@
 package com.qt.qualithon.test;
 
-import java.lang.reflect.Method;
-
 import org.testng.annotations.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Reporter;
-
 import static org.assertj.core.api.Assertions.*;
 
 import com.qt.qualithon.TestSession;
 import com.qt.qualithon.ui.imdb.*;
+import com.qt.qualithon.ui.rotten.MoviePageOfRotten;
+import com.qt.qualithon.ui.rotten.WebAppOfRotten;
 import com.qt.qualithon.model.Movie;
 import com.qt.qualithon.api.omdb.*;
 
@@ -59,8 +56,15 @@ public class MovieSearchTest {
 	public void testSearchByExactMovieTitleReturnsMovieAsFirstResult(String title) {
 		// get MoviePage from imdb/rottentomato
 		MoviePage movieOnImdbWeb = new WebApp(this.testSession).launch().search(title).firstMovieResult();
-
+		
 		assertThat(movieOnImdbWeb.title()).isEqualTo(title);
+
+		MoviePageOfRotten movieOnRottenWeb = new WebAppOfRotten(this.testSession)
+				.launch()
+				.search(title)
+				.firstMovieResult();
+		
+		assertThat(movieOnRottenWeb.title()).isEqualToIgnoringCase(title);
 	}
 
 	/**
@@ -79,6 +83,12 @@ public class MovieSearchTest {
 		// get Movie metadata from http://www.omdbapi.com/
 		Movie movie = new OMDbAPI().getMovie(title);
 		assertThat(movieOnImdbWeb.releaseYear()).isEqualTo(movie.releaseYear());
+		
+		MoviePageOfRotten movieOnRottenWeb = new WebAppOfRotten(this.testSession)
+	            .launch()
+	            .search(title)
+	            .firstMovieResult();
+	        assertThat(movieOnRottenWeb.releaseYear()).isEqualTo(movie.releaseYear());
 	}
 
 	/**
@@ -97,6 +107,13 @@ public class MovieSearchTest {
 		// get Movie metadata from http://www.omdbapi.com/
 		Movie movie = new OMDbAPI().getMovie(title);
 		assertThat(movieOnImdbWeb.director()).isEqualTo(movie.director());
+		
+        MoviePageOfRotten movieOnRottenWeb = new WebAppOfRotten(this.testSession)
+	            .launch()
+	            .search(title)
+	            .firstMovieResult();
+
+	        assertThat(movieOnRottenWeb.director()).isEqualTo(movie.director());
 	}
 
 	/**
@@ -115,6 +132,14 @@ public class MovieSearchTest {
 		// get Movie metadata from http://www.omdbapi.com/
 		Movie movie = new OMDbAPI().getMovie(title);
 		assertThat(movieOnImdbWeb.writers()).isEqualTo(movie.writers());
+        MoviePageOfRotten movieOnRottenWeb = new WebAppOfRotten(this.testSession)
+	            .launch()
+	            .search(title)
+	            .firstMovieResult();
+
+	      
+	        
+	        assertThat(movieOnRottenWeb.writers()).isEqualTo(movie.writers());
 	}
 
 	/**
@@ -133,6 +158,13 @@ public class MovieSearchTest {
 		// get Movie metadata from http://www.omdbapi.com/
 		Movie movie = new OMDbAPI().getMovie(title);
 		assertThat(movieOnImdbWeb.genres()).isEqualTo(movie.genres());
+		MoviePageOfRotten movieOnRottenWeb = new WebAppOfRotten(this.testSession)
+        .launch()
+        .search(title)
+        .firstMovieResult();
+
+    assertThat(movieOnRottenWeb.writers()).isEqualTo(movie.writers());
+
 	}
 
 	/**

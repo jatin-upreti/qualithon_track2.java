@@ -73,7 +73,7 @@ public class MoviePage extends Page {
 		List<String> genres = new ArrayList<>();
 
 		List<WebElement> genre = this.testSession.driverWait().until(ExpectedConditions
-				.presenceOfAllElementsLocatedBy(By.cssSelector("div[class='ipc-chip-list sc-14389611-4 ctpXmw']")));
+				.presenceOfAllElementsLocatedBy(By.xpath("//div[@data-testid='genres']")));
 
 		for (WebElement gen : genre) {
 			try {

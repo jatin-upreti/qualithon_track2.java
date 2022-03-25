@@ -155,7 +155,7 @@ public class MovieSearchTest {
 		// get MoviePage from imdb/rottentomato
 		MoviePage movieOnImdbWeb = new WebApp(this.testSession).launch().search(title).firstMovieResult();
 
-		// get Movie metadata from http://www.omdbapi.com/
+		
 		Movie movie = new OMDbAPI().getMovie(title);
 		assertThat(movieOnImdbWeb.genres()).isEqualTo(movie.genres());
 		MoviePageOfRotten movieOnRottenWeb = new WebAppOfRotten(this.testSession)
